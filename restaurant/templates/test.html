@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сайт з вискакуючим меню</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            overflow-x: hidden; /* Щоб не було горизонтального скролінгу */
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .menu-btn {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .menu-btn div {
+            height: 3px;
+            width: 100%;
+            background-color: #fff;
+            border-radius: 2px;
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            right: -250px;
+            width: 250px;
+            height: 100%;
+            background-color: #333;
+            color: #fff;
+            padding-top: 60px;
+            transition: right 0.3s ease;
+        }
+
+        .nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .nav ul li {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        .nav ul li a:hover {
+            text-decoration: underline;
+        }
+
+        .nav.active {
+            right: 0;
+        }
+
+        @media (max-width: 768px) {
+            .menu-btn {
+                display: flex;
+            }
+        }
+
+        @media (min-width: 1920px) { /* HD, FullHD, 2K, 4K экраны */
+            .menu-btn {
+                display: flex; /* Убедимся, что кнопка видна на больших экранах */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">MySite</div>
+    <div class="menu-btn" id="menu-btn">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</header>
+
+<nav class="nav" id="nav">
+    <ul>
+        <li><div class="menu-btn" id="menu-off-btn">x</div></li>
+        <li><a href="#">Головна</a></li>
+        <li><a href="#">Про нас</a></li>
+        <li><a href="#">Послуги</a></li>
+        <li><a href="#">Портфоліо</a></li>
+        <li><a href="#">Контакти</a></li>
+    </ul>
+</nav>
+
+<script>
+    const menuBtn = document.getElementById('menu-btn');
+    const nav = document.getElementById('nav');
+
+    menuBtn.addEventListener('click', () => {
+        nav.classList.toggle('active');
+    });
+
+    
+    const closeBtn = document.getElementById('menu-off-btn');
+    closeBtn.addEventListener('click', () => {
+        nav.classList.remove('active');
+    });
+</script>
+
+</body>
+</html>

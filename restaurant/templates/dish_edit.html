@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block title %}Редагувати страву{% endblock %}
+{% block style%}
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.edit-food-page {
+    width: 100%;
+    max-width: 600px;
+    margin: 40px auto;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.page-title {
+    text-align: center;
+    font-size: 2rem;
+    color: #6c63ff;
+    margin-bottom: 20px;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.food-form label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.food-form input[type="text"], 
+.food-form input[type="number"], 
+.food-form textarea, 
+.food-form input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    transition: border-color 0.3s;
+}
+
+.food-form input[type="text"]:focus, 
+.food-form input[type="number"]:focus, 
+.food-form textarea:focus, 
+.food-form input[type="file"]:focus {
+    border-color: #6c63ff;
+    outline: none;
+}
+
+.food-form textarea {
+    min-height: 100px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 20px;
+    font-size: 1rem;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+    font-weight: bold;
+}
+
+.submit-btn {
+    background-color: #6c63ff;
+    color: #fff;
+    border: none;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background-color: #5a54e0;
+}
+
+.back-btn {
+    background-color: #ff4c4c;
+    color: #fff;
+    text-align: center;
+    display: block;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+}
+
+.back-btn:hover {
+    background-color: #e03b3b;
+}
+{% endblock %}
+{% block content %}
+<div class="edit-food-page">
+    <h1 class="page-title">🍲 Редагувати страву</h1>
+    
+    <div class="form-container">
+        <form method="post" enctype="multipart/form-data" class="food-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+                <p style="margin-top: 20px;"><button type="submit" class="btn submit-btn">✔️ Зберегти зміни</button>
+        </form>
+        
+        <a href="{% url 'food_list' %}" class="btn back-btn">⬅️ Назад до списку страв</a>
+    </div>
+</div>
+
+{% endblock %}

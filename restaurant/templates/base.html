@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}___GRAM___{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(135deg, #6c63ff, #63a4ff);
+            padding: 20px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #ffb400;
+        }
+
+        .auth-links a {
+            background-color: #ffb400;
+            color: #333;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .auth-links a:hover {
+            background-color: #fff;
+        }
+
+        .container {
+            width: 80%;
+            margin: 40px auto;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu-btn {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 25px;
+            cursor: pointer;
+        }
+
+        .menu-btn div {
+            height: 3px;
+            width: 100%;
+            background-color: #fff;
+            border-radius: 2px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .menu-btn.active div:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .menu-btn.active div:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-btn.active div:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        .nav1 {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: #6c63ff;
+            color: #fff;
+            padding-top: 60px;
+            transition: right 0.4s ease;
+            box-shadow: -4px 0 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav1 ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .nav1 ul li {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .nav1 ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: 0.3s;
+        }
+
+        .nav1 ul li a:hover {
+            color: #ffb400;
+        }
+
+        .nav1.active {
+            right: 0;
+        }
+
+        .menu-off-btn {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: #fff;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+        }
+
+        .menu-off-btn:hover {
+            color: #ffb400;
+        }
+
+        main {
+            min-height: 60vh;
+        }
+
+        footer {
+            background-color: #6c63ff;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .menu-btn {
+                display: flex;
+            }
+        }
+        
+        {% block style %}
+        {% endblock %}
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><div class="menu-btn" id="menu-btn"><div></div><div></div><div></div></div></li>
+                {% if user.is_authenticated %}
+                    <li><a href="#">Профіль: {{ user.username }}</a></li>
+                    
+                    {% if user.is_staff %}
+                    <li>staff</li>
+                    {% else %}
+                    {% endif %}
+                    <li><a href="{% url 'logout' %}">Вихід</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Вхід</a></li>
+                    <li><a href="{% url 'register' %}">Реєстрація</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <nav class="nav1" id="nav">
+        <ul>
+            <li><button class="menu-off-btn" id="menu-off-btn">X</button></li><p>
+            <li><a href="#">Головна</a></li></p><p>
+            <li><a href="#">Про нас</a></li></p><p>
+            <li><a href="#">Послуги</a></li></p><p>
+            <li><a href="#">Портфоліо</a></li></p><p>
+            <li><a href="#">Контакти</a></li></p>
+        </ul>
+    </nav>
+
+    
+        {% block content %}
+        {% endblock %}
+    
+
+    <footer>
+        <p>© 2024 Соціальна мережа ___GRAM___</p>
+    </footer>
+
+    <script>
+        const menuBtn = document.getElementById('menu-btn');
+        const nav = document.getElementById('nav');
+        const closeBtn = document.getElementById('menu-off-btn');
+
+        menuBtn.addEventListener('click', () => {
+            nav.classList.toggle('active');
+            menuBtn.classList.toggle('active');
+        });
+
+        closeBtn.addEventListener('click', () => {
+            nav.classList.remove('active');
+            menuBtn.classList.remove('active');
+        });
+    </script>
+</body>
+</html>
