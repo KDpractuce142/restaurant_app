@@ -5,12 +5,9 @@ from django.contrib import messages
 from django.http import HttpResponseForbidden
 from .models import *
 from .forms import *
-
-
-def add_dish_basket(request, id):
 from django.shortcuts import get_object_or_404, redirect
 from django.http import JsonResponse, HttpResponseRedirect
-from .models import Product
+
 
 def add_to_cart(request, id):
     """

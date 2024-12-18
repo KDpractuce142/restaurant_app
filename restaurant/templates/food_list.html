@@ -149,7 +149,7 @@
     {% else %}
         <h1 class="page-title">страви</h1>
     {% endif %}
-    {% if user.is_authenticated %}
+    {% if user.is_staff %}
         <a href="{% url 'new_food' %}" class="add-food-btn">+ Додати нову страву</a>
     {% else %}
     {% endif %}
